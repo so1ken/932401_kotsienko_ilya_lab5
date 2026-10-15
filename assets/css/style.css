@@ -1,0 +1,302 @@
+/* Глобальные CSS-переменные для централизованного управления палитрой и шрифтами */
+:root {
+    --bg-main: #f5efe6;
+    --bg-card: #faf6f0;
+    --text-color: #2c1d11;
+    --accent-color: #6d4c41;
+    --border-color: #d7ccc8;
+    --font-family: Arial, sans-serif;
+}
+
+/* Общие стили страницы и базовые параметры текста */
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-main);
+    color: var(--text-color);
+    margin: 20px;
+    line-height: 1.5;
+}
+
+/* Блочные контейнеры. position: static — стандартное поведение, элементы идут в обычном потоке документа */
+header.static-element, main, aside, footer {
+    position: static;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+/* object-fit: cover сохраняет пропорции изображения, подгоняя его под размеры без сплющивания */
+img {
+    border: 2px solid var(--accent-color);
+    object-fit: cover;
+}
+
+/* Стилизация ссылок и состояния посещенной ссылки (:visited) */
+a { color: var(--accent-color); }
+a:visited { color: #3e2723; }
+
+/* Интерактивная кнопка: transition сглаживает смену цвета при :hover, а :active слегка сдвигает ее при клике */
+button {
+    background-color: var(--accent-color);
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+button:hover { background-color: #4e342e; }
+button:active { transform: translateY(1px); }
+
+/* Настройки полей формы. box-sizing: border-box не дает отступам (padding) вылезать за пределы ширины */
+input[type="text"], input[type="email"], textarea {
+    width: 100%;
+    max-width: 400px;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid var(--border-color);
+    background-color: #ffffff;
+}
+
+/* При фокусе (:focus) на поле имени убираем дефолтную рамку браузера и запускаем анимацию пульсации */
+#name:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Стандартная подсветка для остальных полей ввода */
+input[type="email"]:focus, textarea:focus {
+    outline: 2px solid var(--accent-color);
+}
+
+/* Анимация пульсации: расширяет полупрозрачную тень вокруг поля без изменения размеров самого элемента */
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(109, 76, 65, 0.4); }
+    50% { box-shadow: 0 0 0 6px rgba(109, 76, 65, 0); }
+}
+
+/* Внешняя обертка. perspective создает объемную глубину для вложенных элементов */
+.card {
+    perspective: 1200px;
+    max-width: 550px;
+    height: 60px;
+    margin-bottom: 10px;
+    position: relative; /* Относительное позиционирование служит точкой отсчета для граней */
+}
+
+/* Внутренний контейнер, который вращается. transform-style: preserve-3d позволяет дочерним слоям жить в 3D */
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.6s ease-in-out; /* Мягкая и спокойная анимация */
+    transform-style: preserve-3d;
+}
+
+/* При наведении на карточку разворачиваем внутренний блок на 180 градусов вокруг оси Y */
+.card:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+/* Общие стили передней и задней стороны. 
+   position: absolute и inset: 0 накладывают их ровно друг на друга.
+   backface-visibility: hidden скрывает изнаночную сторону грани при повороте. */
+.card-front, .card-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border: 1px solid var(--border-color);
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+}
+
+/* Задняя грань заранее развернута на 180 градусов, поэтому в начальном состоянии она скрыта от пользователя */
+.card-back {
+    transform: rotateY(180deg);
+    background-color: var(--accent-color);
+    color: #ffffff;
+}
+
+/* Избегаем горизонтальной прокрутки на уровне всего документа */
+body {
+    overflow-x: hidden;
+}
+
+/* Навигационное меню (Flexbox) */
+.main-nav ul {
+    display: flex;
+    flex-wrap: wrap; /* Разрешаем перенос на новые строки, если не влезает */
+    justify-content: center; /* Центрируем кнопки */
+    gap: 20px;
+    list-style: none;
+    padding: 15px;
+    margin: 0 0 15px 0;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+}
+
+.main-nav a {
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--text-color);
+    padding: 5px 10px;
+    transition: color 0.2s;
+}
+
+.main-nav a:hover {
+    color: var(--accent-color);
+}
+
+/* Контейнер для карточек книг - Flexbox */
+.books-flex-container {
+    display: flex;
+    flex-wrap: wrap; /* Позволяет карточкам падать на следующую строку */
+    gap: 20px;
+}
+
+/* Сама карточка книги */
+.book-card {
+    flex: 1 1 calc(33.333% - 20px); 
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    text-align: center; /* Центрируем название и обложку */
+}
+
+.book-card h3 {
+    margin-top: 0;
+    font-size: 1.1em;
+}
+
+.book-cover {
+    width: 100%;
+    max-width: 180px; /* Ограничиваем ширину, чтобы обложка не растягивалась во всю карточку */
+    height: auto; /* Высота подстраивается сама под пропорции картинки */
+    margin: 0 auto 15px auto; /* Центрируем обложку по горизонтали */
+    display: block;
+    border: 1px solid var(--border-color);
+}
+
+/* Контейнер для цитат - CSS Grid */
+.quotes-grid-container {
+    display: grid;
+    /* 3 одинаковые колонки */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 15px;
+}
+
+/* Блок цитаты */
+.quote-block {
+    background-color: #ffffff;
+    border-left: 4px solid var(--accent-color);
+    margin: 0;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.quote-block p {
+    font-style: italic;
+    margin-top: 0;
+}
+
+.quote-block footer {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* Для планшетов. Ширина экрана до 900px */
+@media (max-width: 900px) {
+    /* Карточки книг: по 2 в ряд */
+    .book-card {
+        flex-basis: calc(50% - 20px);
+    }
+}
+
+/* Для мобильных телефонов. Ширина экрана до 600px */
+@media (max-width: 600px) {
+    /* Карточки книг: по 1 в ряд */
+    .book-card {
+        flex-basis: 100%;
+    }
+    
+    /* Цитаты: 1 колонка вместо 3 */
+    .quotes-grid-container {
+        grid-template-columns: 1fr;
+    }
+
+    /* Навигация: складываем в вертикальную колонку */
+    .main-nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+}
+
+.books-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+/* Скрытая секция (используется для «Скрыть книги») */
+.hidden-section {
+    display: none !important;
+}
+
+/* Кнопка «Прочитано» внутри карточки книги */
+.read-btn {
+    background-color: var(--accent-color);
+    color: #ffffff;
+    border: none;
+    padding: 4px 12px;
+    cursor: pointer;
+    font-size: 0.9em;
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+}
+.read-btn:hover {
+    background-color: #4e342e;
+}
+
+/* Прочитанная книга выделяется зелёным */
+.book-card.read .read-btn {
+    background-color: #4caf50;
+}
+.book-card.read .read-btn:hover {
+    background-color: #388e3c;
+}
+
+body.dark-theme {
+    --bg-main: #1e1e1e;
+    --bg-card: #2a2a2a;
+    --text-color: #e0e0e0;
+    --accent-color: #bcaaa4;
+    --border-color: #444444;
+}
+
+body.dark-theme input[type="text"],
+body.dark-theme input[type="email"],
+body.dark-theme textarea {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+}
+
+body.dark-theme .card-front,
+body.dark-theme .card-back,
+body.dark-theme .book-card,
+body.dark-theme .quote-block {
+    background-color: #333333;
+}
+
+body.dark-theme img {
+    filter: brightness(0.85);
+}
