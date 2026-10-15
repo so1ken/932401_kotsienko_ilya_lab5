@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О себе | Коциенко Илья (ЛР №5)</title>
+
+    <!-- Внешний CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Внутренний CSS: отступы и нумерация для списка проектов -->
+    <style>
+        main ol.projects-list {
+            padding-left: 0;
+            list-style: none;
+            counter-reset: project-counter;
+        }
+        main ol.projects-list .card {
+            counter-increment: project-counter;
+        }
+        main ol.projects-list .card-front strong::before {
+            content: counter(project-counter) ". ";
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="static-element">
+        <h1>Коциенко Илья Игоревич</h1>
+        <p>Персональная страница: Книжный червь и писатель</p>
+        <!-- кнопка переключения темы -->
+        <button type="button" id="themeToggle">Тёмная тема</button>
+    </header>
+
+    <!-- Навигационное меню на Flexbox -->
+    <nav class="main-nav">
+        <ul>
+            <li><a href="#about">О себе</a></li>
+            <li><a href="#skills">Навыки</a></li>
+            <li><a href="#books">Книги на полке</a></li>
+            <li><a href="#quotes">Цитаты недели</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="about">
+            <h2>О себе</h2>
+            <img src="assets/images/image.jpg" alt="Фото Ильи Коциенко" width="150" style="max-width: 100%;">
+            <p>С небольшой периодичностью люблю погружаться в книги с головой, от фэнтэзи до романов.</p>
+        </section>
+
+        <section id="skills">
+            <h2>Навыки</h2>
+            <ul>
+                <li>Литературный анализ и критический разбор текстов</li>
+                <li>Написание рецензий и аннотаций</li>
+                <li>Работа с источниками и материалами</li>
+                <li>Вычитка и редактирование</li>
+            </ul>
+        </section>
+
+        <!-- Flex-карточки -->
+        <div class="books-controls">
+            <button type="button" id="addBookBtn">Добавить книгу</button>
+            <button type="button" id="removeBookBtn">Удалить последнюю</button>
+            <button type="button" id="toggleBooksBtn">Скрыть книги</button>
+        </div>
+
+        <!-- Flex-карточки -->
+        <section id="books">
+            <h2>Книги на полке</h2>
+            <div class="books-flex-container">
+                <article class="book-card">
+                    <img src="assets/images/book1.jpg" alt="Обложка Ведьмак" class="book-cover">
+                    <h3>Ведьмак. Последнее желание</h3>
+                    <p><strong>Автор:</strong> Анджей Сапковский</p>
+                    <p><strong>Статус:</strong> Прочитано</p>
+                </article>
+
+                <article class="book-card">
+                    <img src="assets/images/book2.jpg" alt="Обложка Под куполом" class="book-cover">
+                    <h3>Под куполом</h3>
+                    <p><strong>Автор:</strong> Стивен Кинг</p>
+                    <p><strong>Статус:</strong> В процессе</p>
+                </article>
+
+                <article class="book-card">
+                    <img src="assets/images/book3.jpg" alt="Обложка Свет джедаев" class="book-cover">
+                    <h3>Свет джедаев</h3>
+                    <p><strong>Автор:</strong> Чарльз Соул</p>
+                    <p><strong>Статус:</strong> Прочитано</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Grid-галерея -->
+        <section id="quotes">
+            <h2>Цитаты недели</h2>
+            <div class="quotes-grid-container">
+                <blockquote class="quote-block">
+                    <p>«Зло — это зло, Стрегобор. Меньшее, большее, среднее — всё едино...»</p>
+                    <footer>— Анджей Сапковский, <cite>Ведьмак</cite></footer>
+                </blockquote>
+
+                <blockquote class="quote-block">
+                    <p>«Если не можешь шутить над смертью, то над чем же еще?»</p>
+                    <footer>— Стивен Кинг, <cite>Под куполом</cite></footer>
+                </blockquote>
+
+                <blockquote class="quote-block">
+                    <p>«Мы все — Республика. Мы — единое целое.»</p>
+                    <footer>— Чарльз Соул, <cite>Свет джедаев</cite></footer>
+                </blockquote>
+            </div>
+        </section>
+
+        <section>
+            <h2>Проекты (Книги для экранизации)</h2>
+            <ol class="projects-list">
+                <li class="card" tabindex="0">
+                    <div class="card-inner">
+                        <div class="card-front"><strong>«Ведьмак» (Анджей Сапковский)</strong></div>
+                        <div class="card-back">Написание альтернативного продолжения истории.</div>
+                    </div>
+                </li>
+                <li class="card" tabindex="0">
+                    <div class="card-inner">
+                        <div class="card-front"><strong>«Под куполом» (Стивен Кинг)</strong></div>
+                        <div class="card-back">Идея для полноценной адаптации или спин-оффа.</div>
+                    </div>
+                </li>
+                <li class="card" tabindex="0">
+                    <div class="card-inner">
+                        <div class="card-front"><strong>«Свет джедаев» (Чарльз Соул)</strong></div>
+                        <div class="card-back">Концепт экранизации по эпохе Расцвета Республики.</div>
+                    </div>
+                </li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>Обратная связь</h2>
+            <form id="feedbackForm" action="#" method="post">
+                <p>
+                    <label for="name">Имя:</label><br>
+                    <input type="text" id="name" name="name" placeholder="Введите ваше имя" required>
+                </p>
+                <p>
+                    <label for="email">Email:</label><br>
+                    <input type="email" id="email" name="email" placeholder="example@mail.ru" required>
+                </p>
+                <p>
+                    <label for="message">Сообщение:</label><br>
+                    <textarea id="message" name="message" rows="4" placeholder="Введите ваше сообщение..." required></textarea>
+                </p>
+                <button type="submit">Отправить</button>
+            </form>
+        </section>
+    </main>
+
+    <aside>
+        <h2>Информация</h2>
+        <p><strong>Любимый жанр:</strong> Фэнтези</p>
+    </aside>
+
+    <footer>
+        <p>&copy; 2026 Коциенко Илья Игоревич</p>
+    </footer>
+
+    <script>
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Имя:', document.getElementById('name').value);
+            console.log('Email:', document.getElementById('email').value);
+            console.log('Сообщение:', document.getElementById('message').value);
+            alert('Отправлено! Данные выведены в консоль.');
+        });
+    </script>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
